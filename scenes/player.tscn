@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://blqcci46vgeym"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u8vuu"]
+size = Vector2(32, 32)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3vyb7"]
+radius = 6.0
+height = 32.0
+
+[node name="Player" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_u8vuu")
+
+[node name="Hitbox" type="CharacterBody2D" parent="."]
+
+[node name="HitboxCollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+visible = false
+position = Vector2(0, 10)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_3vyb7")
