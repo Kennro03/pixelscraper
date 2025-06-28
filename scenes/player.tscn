@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://blqcci46vgeym"]
+[gd_scene load_steps=4 format=3 uid="uid://blqcci46vgeym"]
+
+[ext_resource type="Script" uid="uid://dk1jyfknwkhsv" path="res://scenes/player.gd" id="1_3vyb7"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u8vuu"]
 size = Vector2(32, 32)
@@ -7,15 +9,18 @@ size = Vector2(32, 32)
 radius = 6.0
 height = 32.0
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_3vyb7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_u8vuu")
 
-[node name="Hitbox" type="CharacterBody2D" parent="."]
-
-[node name="HitboxCollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="HitboxCollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(0, 10)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3vyb7")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="DashTimer" type="Timer" parent="."]
