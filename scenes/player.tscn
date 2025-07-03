@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://blqcci46vgeym"]
+[gd_scene load_steps=9 format=3 uid="uid://blqcci46vgeym"]
 
 [ext_resource type="Script" uid="uid://dk1jyfknwkhsv" path="res://scenes/player.gd" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://bpjgocjdwe45o" path="res://scenes/state_machine.gd" id="2_g2els"]
+[ext_resource type="Script" uid="uid://b6wneo2uyhoo2" path="res://scenes/States/idle.gd" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://ei6w5rocd2w2" path="res://scenes/States/running.gd" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://cy11euklugtyy" path="res://scenes/States/jumping.gd" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://b7jw1ekdqndj" path="res://scenes/States/falling.gd" id="6_tuyoq"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u8vuu"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tuyoq"]
 size = Vector2(32, 32)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3vyb7"]
@@ -13,10 +18,9 @@ height = 32.0
 script = ExtResource("1_3vyb7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_u8vuu")
+texture = SubResource("PlaceholderTexture2D_tuyoq")
 
 [node name="HitboxCollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 10)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3vyb7")
@@ -24,3 +28,18 @@ shape = SubResource("CapsuleShape2D_3vyb7")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="DashTimer" type="Timer" parent="."]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_g2els")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_qhqgy")
+
+[node name="Running" type="Node" parent="StateMachine"]
+script = ExtResource("4_dqkch")
+
+[node name="Jumping" type="Node" parent="StateMachine"]
+script = ExtResource("5_qlg0r")
+
+[node name="Falling" type="Node" parent="StateMachine"]
+script = ExtResource("6_tuyoq")
