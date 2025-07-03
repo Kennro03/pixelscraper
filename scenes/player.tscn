@@ -17,15 +17,19 @@ height = 32.0
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_3vyb7")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 texture = SubResource("PlaceholderTexture2D_tuyoq")
 
 [node name="HitboxCollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 10)
+show_behind_parent = true
+position = Vector2(0, 16)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3vyb7")
+debug_color = Color(0, 0.56468, 0.868496, 0.42)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
 
 [node name="DashTimer" type="Timer" parent="."]
 
