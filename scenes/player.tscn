@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://blqcci46vgeym"]
+[gd_scene load_steps=10 format=3 uid="uid://blqcci46vgeym"]
 
 [ext_resource type="Script" uid="uid://dk1jyfknwkhsv" path="res://scenes/player.gd" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bpjgocjdwe45o" path="res://scenes/state_machine.gd" id="2_g2els"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ei6w5rocd2w2" path="res://scenes/States/running.gd" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://cy11euklugtyy" path="res://scenes/States/jumping.gd" id="5_qlg0r"]
 [ext_resource type="Script" uid="uid://b7jw1ekdqndj" path="res://scenes/States/falling.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://ceu04ggc74p0q" path="res://scenes/States/dashing.gd" id="7_fjrip"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tuyoq"]
 size = Vector2(32, 32)
@@ -25,13 +26,23 @@ texture = SubResource("PlaceholderTexture2D_tuyoq")
 show_behind_parent = true
 position = Vector2(0, 16)
 rotation = 1.5708
+scale = Vector2(1.2, 1.2)
 shape = SubResource("CapsuleShape2D_3vyb7")
-debug_color = Color(0, 0.56468, 0.868496, 0.42)
+debug_color = Color(0.386638, 3.14053e-06, 0.256581, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="HitboxCollisionShape2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
 
+[node name="DashCooldownTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
 [node name="DashTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.3
+one_shot = true
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_g2els")
@@ -47,3 +58,10 @@ script = ExtResource("5_qlg0r")
 
 [node name="Falling" type="Node" parent="StateMachine"]
 script = ExtResource("6_tuyoq")
+
+[node name="Dashing" type="Node" parent="StateMachine"]
+script = ExtResource("7_fjrip")
+
+[connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="StateMachine/Dashing" method="_on_dash_timer_timeout"]

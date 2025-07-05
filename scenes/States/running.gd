@@ -5,15 +5,17 @@ func enter(_previous_state_path: String, _data := {}) -> void:
 	pass
 
 func physics_update(_delta: float) -> void:
-	var input_direction_x := Input.get_axis("Left", "Right")
-	var input_direction_y := Input.get_axis("Up", "Down")
-	player.velocity.x = player.speed * input_direction_x
-	player.velocity.y = player.speed * input_direction_y
+	var input_direction = Input.get_vector("Left", "Right", "Up", "Down")
+	if Input.is_action_pressed("Sprint") :
+		player.velocity = input_direction * player.sprint
+	else : 
+		player.velocity = input_direction * player.speed 
+	
 	player.move_and_slide()
 
-	##if not player.is_on_floor():
-	##	finished.emit(FALLING)
 	if Input.is_action_just_pressed("Jump"):
 		finished.emit(JUMPING)
-	elif is_equal_approx(input_direction_x, 0.0) and is_equal_approx(input_direction_y, 0.0):
+	elif Input.is_action_just_pressed("Dash") and player.can_dash==true:
+		finished.emit(DASHING)
+	elif input_direction == Vector2(0.0,0.0) :
 		finished.emit(IDLE)
